@@ -1,5 +1,5 @@
 # Promise
-
+[Home](readme.md)
 ## API
 methods:
 - Promise.all
@@ -13,3 +13,5 @@ methods:
 ## Reference
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 - https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[Home](readme.md)
