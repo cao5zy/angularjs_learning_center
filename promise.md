@@ -3,6 +3,36 @@
 
 A Promise is an object representing the eventual completion or failure of an asynchronous operation.
 
+## Case Study
+### Call in sequence
+typscript
+```
+getUser(): Promise<User>{
+    return new Promise<User>((resolve)=>{
+      this.http.get(...)
+      .subscribe(res=>{
+        ...
+        resolve(user_data);
+      };
+}
+
+updateUser() {
+  getUser()
+  .then(user_data=>{
+    //do something on user_data;
+    return user_data; //can return normal data
+  })
+  .then(user_data=>{
+    //update the user_data
+    return new Promise<User>((resolve)=>{
+      this.http.patch(user_data).subscribe(res=>resolve(user_data));
+    }); //can return the promise object
+  })
+  .then(user_data=>{
+    //update the user data on the UI;
+  });
+}
+```
 ## API
 methods:
 - `Promise.all`: It returns a single Promise that resolves when all of the promises in the iterable argument have resolved or when the iterable argument contains no promises. It rejects with the reason of the first promise that rejects.
@@ -12,12 +42,6 @@ methods:
 - `Promise.prototype.race`: It returns a promise that resolves or rejects as soon as one of the promises in the iterable resolves or rejects, with the value or reason from that promise.
 - `Promise.prototype.resolve`: It returns a Promise object that is resolved with the given value
 
-## Case Study
-### Chain invoke
-
-### Error handling
-
-###
 
 ## Reference
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
