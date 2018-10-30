@@ -25,5 +25,6 @@ methods:
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
 - http://www.cnblogs.com/rubylouvre/p/3495286.html
 - https://developers.google.com/web/fundamentals/primers/promises
+- http://liubin.org/promises-book/
 
 [Home](README.md)
