@@ -8,6 +8,7 @@ This is a project to collect the knowledges and cases based on my experiences in
 
 ## Background technologies
 - [Observable](observable.md)
+- [Promise](promise.md)
 
 
 
