@@ -7,7 +7,7 @@ Observables provide support for passing messages between publishers and subscrib
 In angluarJs2+, `rxjs` which ships Observable has been installed when initializing the angularjs project.
 
 ## Case Studies
-### Consume observable object in Http get method
+### Consume observable object in Http post method
 ```
 import { Http } from '@angular/http';
 ...
