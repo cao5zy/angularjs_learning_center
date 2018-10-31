@@ -1,5 +1,7 @@
 # Observable
 [Home](README.md)
+
+
 Observables provide support for passing messages between publishers and subscribers in your application. Observables offer significant benefits over other techniques for event handling, asynchronous programming, and handling multiple values.
 
 In angluarJs2+, `rxjs` which ships Observable has been installed when initializing the angularjs project.
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
 	});
 ```
 **If `subscribe` is not invoked, the post method will NOT run**
+
 
 ## References
 - http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html
