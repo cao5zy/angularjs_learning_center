@@ -36,10 +36,87 @@ export class LoginComponent implements OnInit {
 **If `subscribe` is not invoked, the post method will NOT run**
 
 ### Create your own observable object
+The case that needs to create your own observable object normally is caused by composing an object which needs more than one service calls.
 ```
+import { Component, OnInit } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
+import { AccountService, useService, Service } from 'http-micro-service-front';
+import * as _ from 'lodash';
+
+interface OwnedProject {
+  project: string,
+  members: string[]
+}
 
 
+@Component({
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.css']
+})
+export class ProjectsComponent implements OnInit {
+
+  constructor(private account: AccountService,
+    private _service: Service) {
+      this._queryOwnedProjects = useService(this._service, "users_query_service:owned_projects");
+      this._queryProject = useService(this._service, "users_service:projects");
+    }
+
+  _queryOwnedProjects: any = null;
+  _queryProject: any = null;
+  
+  ownedProjects: Observable<OwnedProject[]> = null;
+  ngOnInit() {
+    this.ownedProjects = new Observable<OwnedProject[]>((observer:Observer<OwnedProject[]>)=>{
+	
+      let getOwnedProjects:()=>Promise<string[]> = ()=>{
+        return new Promise<string[]>(resolve=>{
+	  if (this.account.hasToken())
+	  {
+            this._queryOwnedProjects("get")({ id: this.account.getName()})
+	      .subscribe(res=>{
+		resolve(res.projects);
+	    });
+	  }
+	  else
+	    resolve([]);  
+	});
+      }
+
+      let getProjectMembers:(string)=>Promise<OwnedProject> = (project)=>{
+        return new Promise<OwnedProject>(resolve=>{
+	  this._queryProject("get")({id: buildProjectKey(project)})
+	    .subscribe(res=>{
+	      resolve({project: project, members:res.users});
+	    });
+	});
+      }
+
+      let  buildProjectKey: (string)=>string = (project)=>{
+        return this.account.getName() + "$$" + project;
+      }
+      
+      getOwnedProjects()
+      .then(projects=>{
+        return Promise.all(_.map(projects, project => getProjectMembers(project)));
+      })
+      .then(ownedProjects=>{
+        observer.next(ownedProjects);
+	observer.complete();**
+      });
+    });
+  }
+
+}
+
+
+```
+The code consumes `this.ownedProjects`.
+```
+<tr *ngFor="let obj of ownedProjects | async; let i = index;">
+  <td>{{ obj.project }}</td>
+  <td><ul><li *ngFor="let member of obj.members">{{ member }};</li></ul></td>
+</tr>
 ```
 
 
