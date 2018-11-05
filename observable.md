@@ -36,8 +36,13 @@ export class LoginComponent implements OnInit {
 **If `subscribe` is not invoked, the post method will NOT run**
 
 ### Create your own observable object
-The case that needs to create your own observable object normally is caused by composing an object which needs more than one service calls.
+Normally, we get the observable objects from http directly. Why should we create our own observable object?   
+In this case, you will find it tries to compose `OwnedProject` object. It gets `project` from a service call and `members` from the other service call.  
+So it needs the observable object to notify when finishing composing the `OwnedProject`.    
+
+**However, this is a solution in the front end. If you work closely with the backend service, you can request the colleagues to create the other service API to compose the OwnedProject object at the service end.**
 ```
+The case that needs to create your own observable object normally is caused by composing an object which needs more than one service calls. 
 import { Component, OnInit } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { AccountService, useService, Service } from 'http-micro-service-front';
@@ -101,8 +106,8 @@ export class ProjectsComponent implements OnInit {
         return Promise.all(_.map(projects, project => getProjectMembers(project)));
       })
       .then(ownedProjects=>{
-        observer.next(ownedProjects);
-	observer.complete();**
+        observer.next(ownedProjects);  // publish the composed data
+	observer.complete(); // end the publish
       });
     });
   }
