@@ -42,6 +42,9 @@ methods:
 - `Promise.prototype.race`: It returns a promise that resolves or rejects as soon as one of the promises in the iterable resolves or rejects, with the value or reason from that promise.
 - `Promise.prototype.resolve`: It returns a Promise object that is resolved with the given value
 
+If you find the promise object doesn't work in your target browser/environment, please refer to the links below.
+- https://stackoverflow.com/questions/22516959/how-to-determine-if-a-promise-is-supported-by-the-browser
+- https://stackoverflow.com/questions/36016327/how-to-make-promises-work-in-ie11
 
 ## Reference
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
