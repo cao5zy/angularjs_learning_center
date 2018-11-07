@@ -20,3 +20,4 @@ This is a project to collect the knowledges and cases based on my experiences in
 - [Injection](injection.md)
 - [work with class](ngclass.md)
 - [disable button](disable_button.md)
+- [events between components](events_between_components.md)
